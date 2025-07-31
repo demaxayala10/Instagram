@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Your Device Details</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <style>
+     body { font-family: system-ui, sans-serif; margin: 2rem; }
+     li   { margin: .3rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Device details</h1>
+  <ul id="list"></ul>
+
+  <script>
+    // Helper
+    function add(label, value) {
+      const li = document.createElement('li');
+      li.textContent = `${label}: ${value}`;
+      document.getElementById('list').appendChild(li);
+    }
+
+    // Information you can pick up client-side
+    add('User-Agent',      navigator.userAgent);
+    add('Platform',        navigator.platform);
+    add('Language',        navigator.language);
+    add('Screen (CSS px)', screen.width + ' × ' + screen.height);
+    add('Viewport',        innerWidth  + ' × ' + innerHeight);
+    add('Device memory',   navigator.deviceMemory || 'n/a');
+    add('CPU cores',       navigator.hardwareConcurrency || 'n/a');
+    if ('connection' in navigator) {
+      add('Network type', navigator.connection.effectiveType);
+    }
+
+    // OPTIONAL – send the same data to your server
+    /*
+    fetch('https://YOUR_BACKEND/collect', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+            ua: navigator.userAgent,
+            platform: navigator.platform,
+            lang: navigator.language,
+            screen: {w: screen.width, h: screen.height},
+            viewport: {w: innerWidth, h: innerHeight},
+            memory: navigator.deviceMemory,
+            cores: navigator.hardwareConcurrency,
+            net: navigator.connection?.effectiveType
+        })
+    });
+    */
+  </script>
+</body>
+</html>
